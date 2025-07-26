@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ArrowLeft, Ruler, Weight } from "lucide-react";
 import { usePokemonDetail } from "@/hooks/usePokemonDetail";
 
@@ -54,25 +54,6 @@ export function PokemonDetailPage() {
     return statNames[name] || name.charAt(0).toUpperCase() + name.slice(1);
   };
 
-  const getStatColor = (statName: string) => {
-    const colors: Record<string, string> = {
-      hp: "bg-red-500",
-      attack: "bg-orange-500",
-      defense: "bg-yellow-500",
-      "special-attack": "bg-blue-500",
-      "special-defense": "bg-green-500",
-      speed: "bg-pink-500",
-    };
-    return colors[statName] || "bg-gray-500";
-  };
-
-  const formatAbilityName = (name: string) => {
-    return name
-      .split("-")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  };
-
   // Error state
   if (error) {
     return (
@@ -95,9 +76,9 @@ export function PokemonDetailPage() {
       <div className="min-h-screen bg-gradient-to-b from-purple-400 to-purple-600">
         <div className="container mx-auto px-4 py-8">
           <Button
-            variant="ghost"
+            variant="secondary"
             onClick={handleBackToList}
-            className="text-white hover:bg-white/20 mb-6"
+            className="mb-6"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to List
@@ -136,34 +117,28 @@ export function PokemonDetailPage() {
     <div className="min-h-screen bg-gradient-to-b from-purple-400 to-pink-500">
       <div className="container mx-auto px-4 py-8">
         {/* Back Button */}
-        <Button
-          variant="ghost"
-          onClick={handleBackToList}
-          className="text-white hover:bg-white/20 mb-6"
-        >
+        <Button variant="secondary" onClick={handleBackToList} className="mb-6">
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to List
         </Button>
 
-        {/* Header Section */}
-        <div className="text-center text-white mb-8">
-          <h1 className="text-4xl font-bold mb-2">
-            ⚡ {formatPokemonName(pokemon.name)}
-          </h1>
-          <p className="text-purple-100 text-lg">
-            #{pokemon.id.toString().padStart(3, "0")}
-          </p>
-        </div>
-
         {/* Main Content - Single Card Layout */}
         <div className="max-w-4xl mx-auto">
-          <Card className="bg-white rounded-lg">
-            <CardContent className="p-8">
+          <Card className="bg-white rounded-lg pt-0 border-0">
+            <CardHeader className="text-center text-white bg-gradient-to-r from-purple-500 to-pink-500 rounded-t-lg py-6">
+              <h1 className="text-4xl font-bold mb-2">
+                ⚡ {formatPokemonName(pokemon.name)}
+              </h1>
+              <p className="text-purple-100 text-lg">
+                #{pokemon.id.toString().padStart(3, "0")}
+              </p>
+            </CardHeader>
+            <CardContent className="p-4 px-8">
               <div className="flex flex-col lg:flex-row gap-8">
                 {/* Left Side - Pokemon Image and Basic Info */}
                 <div className="flex-shrink-0 lg:w-80">
                   {/* Pokemon Image */}
-                  <div className="w-full h-64 bg-gray-50 rounded-lg flex items-center justify-center overflow-hidden mb-4">
+                  <div className="w-full bg-gray-50 rounded-full flex items-center justify-center overflow-hidden mb-4 ms-4">
                     {pokemon.sprites.official_artwork ? (
                       <img
                         src={pokemon.sprites.official_artwork}
@@ -199,7 +174,7 @@ export function PokemonDetailPage() {
 
                   {/* Height and Weight */}
                   <div className="grid grid-cols-2 gap-4 text-center">
-                    <div>
+                    <div className="bg-gray-50 rounded-lg p-4">
                       <div className="flex items-center justify-center mb-1">
                         <Ruler className="w-4 h-4 text-gray-600 mr-1" />
                         <span className="text-sm text-gray-600">Height</span>
@@ -209,7 +184,7 @@ export function PokemonDetailPage() {
                       </p>
                     </div>
 
-                    <div>
+                    <div className="bg-gray-50 rounded-lg p-4">
                       <div className="flex items-center justify-center mb-1">
                         <Weight className="w-4 h-4 text-gray-600 mr-1" />
                         <span className="text-sm text-gray-600">Weight</span>
@@ -225,27 +200,24 @@ export function PokemonDetailPage() {
                 <div className="flex-1">
                   {/* Base Stats */}
                   <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                    <h3 className="text-lg font-bold text-gray-800 mb-4">
                       Base Stats
                     </h3>
                     <div className="space-y-3">
                       {pokemon.stats.map((stat) => (
-                        <div
-                          key={stat.name}
-                          className="flex items-center gap-4"
-                        >
-                          <div className="w-20 text-sm font-medium text-gray-600 text-right">
-                            {formatStatName(stat.name)}
-                          </div>
-                          <div className="text-sm font-semibold text-gray-800 w-8 text-center">
-                            {stat.base_stat}
+                        <div key={stat.name}>
+                          <div className="flex justify-between">
+                            <div className="text-sm font-medium text-gray-600">
+                              {formatStatName(stat.name)}
+                            </div>
+                            <div className="text-sm font-semibold text-gray-800 w-8 text-center">
+                              {stat.base_stat}
+                            </div>
                           </div>
                           <div className="flex-1">
-                            <div className="w-full bg-gray-200 rounded-full h-2">
+                            <div className="w-full bg-gray-200 h-2">
                               <div
-                                className={`h-2 rounded-full transition-all duration-1000 ease-out ${getStatColor(
-                                  stat.name
-                                )}`}
+                                className={`h-2 transition-all duration-1000 ease-out bg-black`}
                                 style={{
                                   width: `${Math.min(
                                     (stat.base_stat / 200) * 100,
@@ -262,18 +234,23 @@ export function PokemonDetailPage() {
 
                   {/* Abilities */}
                   <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                    <h3 className="text-lg font-bold text-gray-800 mb-4">
                       Abilities
                     </h3>
                     <div className="space-y-2">
                       {pokemon.abilities.map((ability, index) => (
                         <div key={index} className="flex items-center gap-3">
-                          <span className="text-sm text-gray-800">
-                            {formatAbilityName(ability.name)}
-                          </span>
+                          <Badge
+                            variant="outline"
+                            className={`text-xs text-gray-800 rounded-full ${
+                              ability.is_hidden ? "bg-gray-200" : ""
+                            }`}
+                          >
+                            {ability.name}
+                          </Badge>
                           {ability.is_hidden && (
-                            <span className="text-xs text-gray-500 italic">
-                              (hidden)
+                            <span className="text-xs text-gray-500">
+                              (Hidden)
                             </span>
                           )}
                         </div>
@@ -283,7 +260,7 @@ export function PokemonDetailPage() {
 
                   {/* Base Experience */}
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                    <h3 className="text-lg font-bold text-gray-800 mb-2">
                       Base Experience
                     </h3>
                     <p className="text-2xl font-bold text-purple-600">

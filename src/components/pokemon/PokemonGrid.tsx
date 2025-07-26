@@ -3,6 +3,8 @@ import { PokemonSkeletonGrid } from "./PokemonSkeleton";
 import { LoadMoreButton } from "./LoadMoreButton";
 import { usePaginatedPokemon } from "@/hooks/usePaginatedPokemon";
 import { useInfinitePokemon } from "@/hooks/useInfinitePokemon";
+import { ErrorBoundary } from "@/components/error/ErrorBoundary";
+import { PokemonGridErrorFallback } from "@/components/error/ErrorFallback";
 import {
   Pagination,
   PaginationContent,
@@ -17,7 +19,7 @@ interface PokemonGridProps {
   viewMode: "pagination" | "infinite";
 }
 
-export function PokemonGrid({ viewMode }: PokemonGridProps) {
+function PokemonGridContent({ viewMode }: PokemonGridProps) {
   // Pagination mode
   const paginationData = usePaginatedPokemon(20);
 
@@ -93,7 +95,24 @@ export function PokemonGrid({ viewMode }: PokemonGridProps) {
       {/* Pokemon Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {currentData.pokemon.map((pokemon) => (
-          <PokemonCard key={pokemon.name} pokemon={pokemon} />
+          <ErrorBoundary
+            key={pokemon.name}
+            fallback={({ error, resetError }) => (
+              <div className="bg-white rounded-lg p-4 text-center border border-red-200">
+                <div className="text-red-500 text-sm">
+                  <p>Failed to load</p>
+                  <button
+                    onClick={resetError}
+                    className="text-blue-500 underline"
+                  >
+                    Retry
+                  </button>
+                </div>
+              </div>
+            )}
+          >
+            <PokemonCard pokemon={pokemon} />
+          </ErrorBoundary>
         ))}
       </div>
 
@@ -204,5 +223,13 @@ export function PokemonGrid({ viewMode }: PokemonGridProps) {
         />
       )}
     </div>
+  );
+}
+
+export function PokemonGrid({ viewMode }: PokemonGridProps) {
+  return (
+    <ErrorBoundary fallback={PokemonGridErrorFallback}>
+      <PokemonGridContent viewMode={viewMode} />
+    </ErrorBoundary>
   );
 }

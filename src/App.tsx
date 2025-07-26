@@ -1,13 +1,17 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HomePage } from "@/pages/HomePage";
+import { PokemonDetailPage } from "@/pages/PokemonDetailPage";
 import "./App.css";
 
 function App() {
-  return <>
-  <div className="bg-red-500">
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-  </div>
-  </>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/pokemon/:name" element={<PokemonDetailPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

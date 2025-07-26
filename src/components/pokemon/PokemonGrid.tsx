@@ -97,7 +97,7 @@ function PokemonGridContent({ viewMode }: PokemonGridProps) {
         {currentData.pokemon.map((pokemon) => (
           <ErrorBoundary
             key={pokemon.name}
-            fallback={({ error, resetError }) => (
+            fallback={({ resetError }) => (
               <div className="bg-white rounded-lg p-4 text-center border border-red-200">
                 <div className="text-red-500 text-sm">
                   <p>Failed to load</p>

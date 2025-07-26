@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { usePokemonDetail } from "@/hooks/usePokemonDetail";
-import { PokemonListItem } from "@/lib/api/types";
+import type { PokemonListItem } from "@/lib/api/types";
 import { getPokemonIdFromUrl } from "@/lib/api/pokemon";
 
 interface PokemonCardProps {

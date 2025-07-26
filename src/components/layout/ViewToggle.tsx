@@ -7,7 +7,7 @@ interface ViewToggleProps {
 
 export function ViewToggle({ currentView, onViewChange }: ViewToggleProps) {
   return (
-    <div className="flex gap-2 mb-6">
+    <div className="flex justify-center gap-2 mb-6">
       <Button
         variant={currentView === "pagination" ? "default" : "outline"}
         onClick={() => onViewChange("pagination")}

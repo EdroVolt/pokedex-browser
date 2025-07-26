@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { fetchPokemonDetail, transformPokemonData } from "@/lib/api/pokemon";
-import { UsePokemonDetailResult } from "@/lib/api/types";
+import type { UsePokemonDetailResult } from "@/lib/api/types";
 
 export function usePokemonDetail(
   nameOrId: string | number | undefined

@@ -1,8 +1,7 @@
-import {
+import type {
   PokemonListResponse,
   Pokemon,
   SimplifiedPokemon,
-  ApiError,
   PokemonListItem,
 } from "./types";
 import {

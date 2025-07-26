@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState, useMemo } from "react";
 import { fetchPokemonList } from "@/lib/api/pokemon";
-import { UsePokemonListResult, PokemonListItem } from "@/lib/api/types";
+import type { UsePokemonListResult, PokemonListItem } from "@/lib/api/types";
 import { DEFAULT_LIMIT } from "@/lib/api/endpoints";
 
 export function usePaginatedPokemon(
@@ -74,13 +74,8 @@ export function usePaginatedPokemon(
     error,
     hasNextPage,
     hasPreviousPage,
-    // Additional navigation methods
     goToPage,
     nextPage,
     previousPage,
-  } as UsePokemonListResult & {
-    goToPage: (page: number) => void;
-    nextPage: () => void;
-    previousPage: () => void;
   };
 }

@@ -1,7 +1,10 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { fetchPokemonList } from "@/lib/api/pokemon";
-import { UseInfinitePokemonResult, PokemonListItem } from "@/lib/api/types";
+import type {
+  UseInfinitePokemonResult,
+  PokemonListItem,
+} from "@/lib/api/types";
 import { DEFAULT_LIMIT } from "@/lib/api/endpoints";
 
 export function useInfinitePokemon(

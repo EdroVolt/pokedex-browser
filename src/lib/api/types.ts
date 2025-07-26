@@ -163,6 +163,10 @@ export interface UsePokemonListResult {
   error: ApiError | null;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
+  // Navigation methods
+  goToPage: (page: number) => void;
+  nextPage: () => void;
+  previousPage: () => void;
 }
 
 export interface UseInfinitePokemonResult {

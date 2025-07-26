@@ -233,4 +233,4 @@ If you have any questions or need help with setup, please open an issue on GitHu
 
 ---
 
-Built with ❤️ by [Your Name] using React, TypeScript, and modern web technologies.
+Built with ❤️ by EdroVolt using React, TypeScript, and modern web technologies.
